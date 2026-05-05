@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Idiochess - You've Been Challenged!</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1B1B2F;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      text-align: center;
+      padding: 32px;
+      max-width: 400px;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 4px;
+      margin-bottom: 8px;
+    }
+    .tagline {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      margin-bottom: 32px;
+    }
+    .card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+    .card p {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-decoration: none;
+      margin-bottom: 12px;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary {
+      background: #7C4DFF;
+      color: #fff;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .status {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.8rem;
+      margin-top: 16px;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>IDIOCHESS</h1>
+    <p class="tagline">Draft. Place. Battle.</p>
+
+    <div class="card">
+      <h2>🎯 You've Been Challenged!</h2>
+      <p>A friend wants to battle you in Idiochess — a chess variant where you draft and place your own pieces.</p>
+    </div>
+
+    <div id="open-app" class="hidden">
+      <a class="btn btn-primary" id="open-link" href="#">OPEN IN APP</a>
+    </div>
+
+    <div id="download-section">
+      <a class="btn btn-primary" id="ios-link" href="https://apps.apple.com/app/idiochess/id000000000">
+        DOWNLOAD FOR iOS
+      </a>
+      <a class="btn btn-secondary" id="android-link" href="https://play.google.com/store/apps/details?id=com.idiochess.app">
+        DOWNLOAD FOR ANDROID
+      </a>
+    </div>
+
+    <p class="status" id="status-text">
+      After installing, tap this link again to accept the challenge.
+    </p>
+  </div>
+
+  <script>
+    (function() {
+      // Extract token from URL params
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get('token');
+
+      if (!token) {
+        document.getElementById('status-text').textContent = 'Invalid invite link.';
+        return;
+      }
+
+      // Build the custom scheme URL
+      const appUrl = 'idiochess://invite/' + encodeURIComponent(token);
+
+      // Set the "Open in App" button href
+      const openLink = document.getElementById('open-link');
+      openLink.href = appUrl;
+
+      // Try to open the app immediately
+      var appOpened = false;
+      var timeout;
+
+      // If the page is still visible after a short delay, the app isn't installed
+      function onVisibilityChange() {
+        if (document.hidden) {
+          appOpened = true;
+          clearTimeout(timeout);
+        }
+      }
+      document.addEventListener('visibilitychange', onVisibilityChange);
+
+      // Attempt to open via custom scheme
+      window.location.href = appUrl;
+
+      timeout = setTimeout(function() {
+        document.removeEventListener('visibilitychange', onVisibilityChange);
+        if (!appOpened) {
+          // App not installed — show download buttons
+          document.getElementById('download-section').classList.remove('hidden');
+          document.getElementById('open-app').classList.add('hidden');
+        }
+      }, 1500);
+
+      // Show the "Open in App" button as fallback
+      document.getElementById('open-app').classList.remove('hidden');
+    })();
+  </script>
+</body>
+</html>
