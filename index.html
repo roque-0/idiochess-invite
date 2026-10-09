@@ -2,154 +2,164 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Idiochess - You've Been Challenged!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#583D66">
+  <meta property="og:title" content="You’ve been challenged in Idiochess">
+  <meta property="og:description" content="Draft your army, wield Arcana, and battle a friend.">
+  <title>Idiochess — You’ve Been Challenged</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      color-scheme: dark;
+      --violet: #b14eff;
+      --violet-minus-one: #7a1cac;
+      --light-neutral-plus-one: #fbfaff;
+      --light-neutral-minus-one: #afadb8;
+      --black: #1b1824;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #1B1B2F;
-      color: #fff;
+      margin: 0;
       min-height: 100vh;
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: max(32px, env(safe-area-inset-top)) 24px max(32px, env(safe-area-inset-bottom));
+      background: linear-gradient(180deg, #583d66 0%, #1b1824 100%);
+      color: var(--light-neutral-plus-one);
+      font-family: "Work Sans", sans-serif;
+    }
+
+    main {
+      width: min(100%, 328px);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 88px;
+      height: 88px;
+      object-fit: contain;
+    }
+
+    .brand-logo {
+      width: 220px;
+      max-width: 80%;
+      height: auto;
+    }
+
+    .message {
+      padding: 24px;
+      border-radius: 8px;
+      background: rgba(27, 24, 36, 0.2);
+    }
+
+    h1 {
+      margin: 0 0 20px;
+      font-size: 20px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 400;
+    }
+
+    strong { color: var(--violet); }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .button {
+      height: 64px;
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    .container {
-      text-align: center;
-      padding: 32px;
-      max-width: 400px;
-    }
-    h1 {
-      font-size: 2rem;
-      font-weight: 900;
-      letter-spacing: 4px;
-      margin-bottom: 8px;
-    }
-    .tagline {
-      color: rgba(255,255,255,0.6);
-      font-size: 0.9rem;
-      letter-spacing: 2px;
-      margin-bottom: 32px;
-    }
-    .card {
-      background: rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 24px;
-    }
-    .card h2 {
-      font-size: 1.2rem;
-      margin-bottom: 8px;
-    }
-    .card p {
-      color: rgba(255,255,255,0.7);
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-    .btn {
-      display: inline-block;
-      width: 100%;
-      padding: 16px 24px;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: 1px;
+      border: 2px solid var(--violet);
+      border-radius: 32px;
+      color: var(--violet);
+      font-size: 20px;
+      font-weight: 700;
       text-decoration: none;
-      margin-bottom: 12px;
-      transition: opacity 0.2s;
+      transition: opacity 120ms ease, transform 120ms ease;
+      -webkit-tap-highlight-color: transparent;
     }
-    .btn:hover { opacity: 0.85; }
-    .btn-primary {
-      background: #7C4DFF;
-      color: #fff;
+
+    .button.primary {
+      border-color: var(--violet-minus-one);
+      background: var(--violet-minus-one);
+      color: var(--light-neutral-plus-one);
     }
-    .btn-secondary {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
+
+    .button:hover { opacity: 0.88; }
+    .button:active { transform: scale(0.985); }
+    .button.disabled { opacity: 0.45; pointer-events: none; }
+
     .status {
-      color: rgba(255,255,255,0.5);
-      font-size: 0.8rem;
-      margin-top: 16px;
+      color: var(--light-neutral-minus-one);
+      text-align: center;
     }
-    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>IDIOCHESS</h1>
-    <p class="tagline">Draft. Place. Battle.</p>
+  <main>
+    <header class="brand">
+      <img class="brand-mark" src="flame-knight.svg" alt="">
+      <img class="brand-logo" src="idiochess-logo.svg" alt="Idiochess">
+    </header>
 
-    <div class="card">
-      <h2>🎯 You've Been Challenged!</h2>
-      <p>A friend wants to battle you in Idiochess — a chess variant where you draft and place your own pieces.</p>
+    <section class="message" aria-labelledby="invite-heading">
+      <h1 id="invite-heading">You’ve been challenged!</h1>
+      <p>
+        A friend wants to play you in <strong>Idiochess</strong>, an asymmetric chess game where you
+        place your own pieces, empower them with Arcana, and battle against friends.
+      </p>
+    </section>
+
+    <div class="actions">
+      <a class="button primary" id="open-link" href="#">Open in App</a>
+      <a class="button" id="ios-link" href="https://apps.apple.com/app/id6819546450">Download for iOS</a>
     </div>
 
-    <div id="open-app" class="hidden">
-      <a class="btn btn-primary" id="open-link" href="#">OPEN IN APP</a>
-    </div>
-
-    <div id="download-section">
-      <a class="btn btn-primary" id="ios-link" href="https://apps.apple.com/app/idiochess/id000000000">
-        DOWNLOAD FOR iOS
-      </a>
-      <a class="btn btn-secondary" id="android-link" href="https://play.google.com/store/apps/details?id=com.idiochess.app">
-        DOWNLOAD FOR ANDROID
-      </a>
-    </div>
-
-    <p class="status" id="status-text">
-      After installing, tap this link again to accept the challenge.
-    </p>
-  </div>
+    <p class="status" id="status-text">After installing, tap this link again to accept the challenge.</p>
+  </main>
 
   <script>
-    (function() {
-      // Extract token from URL params
+    (() => {
       const params = new URLSearchParams(window.location.search);
       const token = params.get('token');
+      const openLink = document.getElementById('open-link');
+      const status = document.getElementById('status-text');
 
       if (!token) {
-        document.getElementById('status-text').textContent = 'Invalid invite link.';
+        openLink.classList.add('disabled');
+        openLink.removeAttribute('href');
+        status.textContent = 'Invalid invite link.';
         return;
       }
 
-      // Build the custom scheme URL
-      const appUrl = 'idiochess://invite/' + encodeURIComponent(token);
-
-      // Set the "Open in App" button href
-      const openLink = document.getElementById('open-link');
-      openLink.href = appUrl;
-
-      // Try to open the app immediately
-      var appOpened = false;
-      var timeout;
-
-      // If the page is still visible after a short delay, the app isn't installed
-      function onVisibilityChange() {
-        if (document.hidden) {
-          appOpened = true;
-          clearTimeout(timeout);
-        }
-      }
-      document.addEventListener('visibilitychange', onVisibilityChange);
-
-      // Attempt to open via custom scheme
-      window.location.href = appUrl;
-
-      timeout = setTimeout(function() {
-        document.removeEventListener('visibilitychange', onVisibilityChange);
-        if (!appOpened) {
-          // App not installed — show download buttons
-          document.getElementById('download-section').classList.remove('hidden');
-          document.getElementById('open-app').classList.add('hidden');
-        }
-      }, 1500);
-
-      // Show the "Open in App" button as fallback
-      document.getElementById('open-app').classList.remove('hidden');
+      openLink.href = 'idiochess://invite/' + encodeURIComponent(token);
     })();
   </script>
 </body>
