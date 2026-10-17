@@ -134,7 +134,7 @@
 
     <section class="message" aria-labelledby="invite-heading">
       <h1 id="invite-heading">You’ve been challenged!</h1>
-      <p>
+      <p id="message-text">
         A friend wants to play you in <strong>Idiochess</strong>, an asymmetric chess game where you
         place your own pieces, empower them with Arcana, and battle against friends.
       </p>
@@ -152,8 +152,21 @@
     (() => {
       const params = new URLSearchParams(window.location.search);
       const token = params.get('token');
+      const isVerified = params.get('verified') === '1';
+      const heading = document.getElementById('invite-heading');
+      const message = document.getElementById('message-text');
       const openLink = document.getElementById('open-link');
       const status = document.getElementById('status-text');
+
+      if (isVerified) {
+        document.title = 'Idiochess — Email Verified';
+        heading.textContent = 'Email verified';
+        message.textContent = 'Your email address has been verified. Return to Idiochess and sign in to continue.';
+        openLink.textContent = 'Return to Idiochess';
+        openLink.href = 'idiochess://verified';
+        status.textContent = 'You can close this page after returning to the app.';
+        return;
+      }
 
       if (!token) {
         openLink.classList.add('disabled');
