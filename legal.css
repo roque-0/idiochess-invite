@@ -1,0 +1,152 @@
+@font-face {
+  font-family: "Work Sans";
+  src: url("./fonts/WorkSans-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Work Sans";
+  src: url("./fonts/WorkSans-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --light-neutral-plus-one: #fbfaff;
+  --light-neutral-minus-one: #afadb8;
+  --violet: #b14eff;
+  --violet-top: #583d66;
+  --black: #1b1824;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--black);
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  background: linear-gradient(180deg, var(--violet-top) 0%, var(--black) 100%);
+  background-attachment: fixed;
+  color: var(--light-neutral-plus-one);
+  font-family: "Work Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.page {
+  width: min(100%, 520px);
+  margin: 0 auto;
+  padding: max(56px, env(safe-area-inset-top)) 0 max(80px, env(safe-area-inset-bottom));
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.brand-mark {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+}
+
+.brand-logo {
+  width: 220px;
+  max-width: 80%;
+  height: auto;
+}
+
+h1,
+h2,
+p,
+ul {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h2 {
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+p:last-child,
+ul:last-child {
+  margin-bottom: 0;
+}
+
+section + section {
+  margin-top: 28px;
+}
+
+ul {
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+
+li + li {
+  margin-top: 6px;
+}
+
+a {
+  color: var(--light-neutral-plus-one);
+  text-decoration-color: var(--violet);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--violet);
+}
+
+.effective-date {
+  color: var(--light-neutral-minus-one);
+}
+
+.related-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgb(175 173 184 / 30%);
+}
+
+@media (max-width: 568px) {
+  .page {
+    padding:
+      max(32px, env(safe-area-inset-top))
+      20px
+      max(48px, env(safe-area-inset-bottom));
+  }
+
+  .brand {
+    margin-bottom: 32px;
+  }
+}
